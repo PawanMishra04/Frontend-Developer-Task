@@ -1,53 +1,73 @@
-# Frontend-Developer-Task
+# React + TypeScript + Vite
 
-## Files Included
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
+
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
-├── README.md
-├── ui_design_resources
-│   ├── air.png
-│   ├── colors_fonts.txt
-│   ├── dots.png
-│   ├── drop.png
-│   ├── flash.png
-│   ├── Frontend-Test.jpg
-│   ├── ds-logo.svg
-│   ├── Humid.png
-│   ├── light.png
-│   ├── next.png
-│   ├── pause.png
-│   ├── prev.png
-│   ├── users.png
-│   └── nav-icons/
-│       ├── home.svg
-│       ├── pie.svg
-│       └── tiles.svg
+
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
-
-## Output
-
-![Design](./ui_design_resources/Frontend-Test.jpg)
-
-## Tech Stack
-
-**React**
-
-## Instructions
-
-- All cards (Lights, water consumption, carbon intensity etc.,) shown on the design are **Individual Components**.
-- The page is **Not responsive**, so fix any suitable resolutions and work on it. (Mention the resolution you used in the readme file)
-- We are looking the output to be **Pixel perfect** and as close to the design as possible.
-- Fonts and color code are mentioned in **colors_fonts.txt** and take extra care with font weight choices.
-- Use the provided icons. Use **font-awesome** or **feather icons** if the necessary icons not found in the folder and choose icons that closest match the design.
-- Use either **apache echarts** or **highchart** for rendering the charts.
-- It is important you **Study the design carefully** and try to get as close to visual parity as possible, including padding, margins, alignment, font sizes and weights, etc. Where you cannot achieve visual parity please be prepared to identify and explain where and why it cannot be achieved.
-- After completion of the task please upload the file to Github/Gitlab with a Readme file and share the Link along with a link to your **Linkedin Profile**
-- more about the product can be found [here](https://www.digispace.app/)
-
-## Extra Credit
-
-- Add tests
-- Adoptive design - Design should change according to the number of cards (components) within the page at the time. (Example if we remove Lights and water consumption you will have only 3 component so the design should change accordingly )
-- Host the application in any platform and share us the link.
-- Use of typescript
-- Use of state management library (Redux, Mobx etc.,)
